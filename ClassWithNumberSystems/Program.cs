@@ -14,30 +14,7 @@ public class Program
 
             if (selectedIndex == options.Length - 1) return;
 
-            Console.Clear();
-            Console.Write("Podaj liczbę: ");
-            string number = Console.ReadLine();
-
-            switch (selectedIndex)
-            {
-                case 0:
-                    numberSystems.SetFromDecimal(number);
-                    break;
-                case 1:
-                    numberSystems.SetFromBinary(number);
-                    break;
-                case 2:
-                    numberSystems.SetFromOctal(number);
-                    break;
-                case 3:
-                    numberSystems.SetFromHexadecimal(number);
-                    break;
-            }
-
-            Console.Clear();
-            Console.WriteLine(numberSystems.ToString());
-            Console.WriteLine("Naciśnij dowolny klawisz, aby kontynuować...");
-            Console.ReadKey();
+            HandleConversion(selectedIndex, numberSystems);
         }
     }
 
@@ -79,6 +56,36 @@ public class Program
                     return selectedIndex;
             }
         }
+    }
+
+    private static void HandleConversion(int selectedIndex,
+                                         NumberSystems numberSystems
+    )
+    {
+        Console.Clear();
+        Console.Write("Podaj liczbę: ");
+        string number = Console.ReadLine();
+
+        switch (selectedIndex)
+        {
+            case 0:
+                numberSystems.SetFromDecimal(number);
+                break;
+            case 1:
+                numberSystems.SetFromBinary(number);
+                break;
+            case 2:
+                numberSystems.SetFromOctal(number);
+                break;
+            case 3:
+                numberSystems.SetFromHexadecimal(number);
+                break;
+        }
+
+        Console.Clear();
+        Console.WriteLine(numberSystems.ToString());
+        Console.WriteLine("Naciśnij dowolny klawisz, aby kontynuować...");
+        Console.ReadKey();
     }
 }
 
