@@ -6,7 +6,9 @@ public class Program
     {
         NumberSystems numberSystems = new();
         string[] options =
-            { "Dziesiętny", "Binarny", "Ósemkowy", "Szesnastkowy", "Wyjście" };
+        {
+            "Dziesiętny", "Binarny", "Ósemkowy", "Szesnastkowy", "\nWyjście"
+        };
 
         while (true)
         {
@@ -14,7 +16,8 @@ public class Program
 
             if (selectedIndex == options.Length - 1) return;
 
-            HandleConversion(selectedIndex, numberSystems);
+            HandleConversion(selectedIndex, numberSystems,
+                options[selectedIndex]);
         }
     }
 
@@ -59,10 +62,12 @@ public class Program
     }
 
     private static void HandleConversion(int selectedIndex,
-                                         NumberSystems numberSystems
+                                         NumberSystems numberSystems,
+                                         string systemName
     )
     {
         Console.Clear();
+        Console.WriteLine($"Wybrany system: {systemName}\n");
         Console.Write("Podaj liczbę: ");
         string number = Console.ReadLine();
 
@@ -83,8 +88,9 @@ public class Program
         }
 
         Console.Clear();
+        Console.WriteLine($"Wybrany system: {systemName}\n");
         Console.WriteLine(numberSystems.ToString());
-        Console.WriteLine("Naciśnij dowolny klawisz, aby kontynuować...");
+        Console.WriteLine("\nNaciśnij dowolny klawisz, aby kontynuować...");
         Console.ReadKey();
     }
 }
@@ -199,7 +205,7 @@ public class NumberSystems
     public override string ToString()
     {
         return
-            $"Decimal: {DecimalNumber}, Binary: {BinaryNumber}, Octal: {OctalNumber}, Hexadecimal: {HexadecimalNumber}";
+            $"Dziesiętny: {DecimalNumber}\nBinarny: {BinaryNumber}\nÓsemkowy: {OctalNumber}\nSzesnastkowy: {HexadecimalNumber}";
     }
 }
 
