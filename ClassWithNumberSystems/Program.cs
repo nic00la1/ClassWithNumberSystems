@@ -4,37 +4,57 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        NumberSystems numberSystems = new NumberSystems();
+        NumberSystems numberSystems = new();
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("Wybierz system liczbowy do przekształcenia:");
+            Console.WriteLine("1. Dziesiętny");
+            Console.WriteLine("2. Binarny");
+            Console.WriteLine("3. Ósemkowy");
+            Console.WriteLine("4. Szesnastkowy");
+            Console.WriteLine("5. Wyjście");
+            Console.Write("Wybór: ");
+            string choice = Console.ReadLine();
 
-        // Przykładowe użycie
-        numberSystems.SetFromDecimal("1562");
-        Console.WriteLine(numberSystems.ToString());
+            if (choice == "5") break;
 
-        numberSystems.SetFromBinary("11000011010");
-        Console.WriteLine(numberSystems.ToString());
+            Console.Write("Podaj liczbę: ");
+            string number = Console.ReadLine();
 
-        numberSystems.SetFromOctal("3032");
-        Console.WriteLine(numberSystems.ToString());
+            switch (choice)
+            {
+                case "1":
+                    numberSystems.SetFromDecimal(number);
+                    break;
+                case "2":
+                    numberSystems.SetFromBinary(number);
+                    break;
+                case "3":
+                    numberSystems.SetFromOctal(number);
+                    break;
+                case "4":
+                    numberSystems.SetFromHexadecimal(number);
+                    break;
+                default:
+                    Console.WriteLine("Nieprawidłowy wybór.");
+                    continue;
+            }
 
-        numberSystems.SetFromHexadecimal("61A");
-        Console.WriteLine(numberSystems.ToString());
+            Console.Clear();
+            Console.WriteLine(numberSystems.ToString());
+            Console.WriteLine("Naciśnij dowolny klawisz, aby kontynuować...");
+            Console.ReadKey();
+        }
     }
 }
 
 public class NumberSystems
 {
-    public string DecimalNumber { get; set; }
-    public string BinaryNumber { get; set; }
-    public string OctalNumber { get; set; }
-    public string HexadecimalNumber { get; set; }
-
-    public NumberSystems()
-    {
-        DecimalNumber = "";
-        BinaryNumber = "";
-        OctalNumber = "";
-        HexadecimalNumber = "";
-    }
+    public string DecimalNumber { get; set; } = "";
+    public string BinaryNumber { get; set; } = "";
+    public string OctalNumber { get; set; } = "";
+    public string HexadecimalNumber { get; set; } = "";
 
     public void SetFromDecimal(string decimalNumber)
     {
@@ -50,6 +70,7 @@ public class NumberSystems
         BinaryNumber = binaryNumber;
         int number = ConvertFromBinary(binaryNumber);
         DecimalNumber = number.ToString();
+        BinaryNumber = binaryNumber;
         OctalNumber = ConvertToOctal(number);
         HexadecimalNumber = ConvertToHexadecimal(number);
     }
@@ -60,6 +81,7 @@ public class NumberSystems
         int number = ConvertFromOctal(octalNumber);
         DecimalNumber = number.ToString();
         BinaryNumber = ConvertToBinary(number);
+        OctalNumber = octalNumber;
         HexadecimalNumber = ConvertToHexadecimal(number);
     }
 
@@ -70,6 +92,7 @@ public class NumberSystems
         DecimalNumber = number.ToString();
         BinaryNumber = ConvertToBinary(number);
         OctalNumber = ConvertToOctal(number);
+        HexadecimalNumber = hexadecimalNumber;
     }
 
     private string ConvertToBinary(int number)
@@ -77,9 +100,10 @@ public class NumberSystems
         string result = "";
         while (number > 0)
         {
-            result = (number % 2) + result;
+            result = number % 2 + result;
             number /= 2;
         }
+
         return result;
     }
 
@@ -88,9 +112,10 @@ public class NumberSystems
         string result = "";
         while (number > 0)
         {
-            result = (number % 8) + result;
+            result = number % 8 + result;
             number /= 8;
         }
+
         return result;
     }
 
@@ -103,6 +128,7 @@ public class NumberSystems
             result = hexDigits[number % 16] + result;
             number /= 16;
         }
+
         return result;
     }
 
@@ -110,19 +136,14 @@ public class NumberSystems
     {
         int result = 0;
         foreach (char digit in binaryNumber)
-        {
             result = result * 2 + (digit - '0');
-        }
         return result;
     }
 
     private int ConvertFromOctal(string octalNumber)
     {
         int result = 0;
-        foreach (char digit in octalNumber)
-        {
-            result = result * 8 + (digit - '0');
-        }
+        foreach (char digit in octalNumber) result = result * 8 + (digit - '0');
         return result;
     }
 
@@ -130,14 +151,16 @@ public class NumberSystems
     {
         int result = 0;
         foreach (char digit in hexadecimalNumber)
-        {
-            result = result * 16 + (digit >= 'A' ? digit - 'A' + 10 : digit - '0');
-        }
+            result = result * 16 +
+                (digit >= 'A' ? digit - 'A' + 10 : digit - '0');
         return result;
     }
 
     public override string ToString()
     {
-        return $"Decimal: {DecimalNumber}, Binary: {BinaryNumber}, Octal: {OctalNumber}, Hexadecimal: {HexadecimalNumber}";
+        return
+            $"Decimal: {DecimalNumber}, Binary: {BinaryNumber}, Octal: {OctalNumber}, Hexadecimal: {HexadecimalNumber}";
     }
 }
+
+// Zadanie wykonała: Nicola Kaleta, uczennica klasy 4D. 
