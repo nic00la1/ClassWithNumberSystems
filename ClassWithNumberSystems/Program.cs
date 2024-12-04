@@ -5,46 +5,79 @@ public class Program
     public static void Main(string[] args)
     {
         NumberSystems numberSystems = new();
+        string[] options =
+            { "Dziesiętny", "Binarny", "Ósemkowy", "Szesnastkowy", "Wyjście" };
+
         while (true)
         {
+            int selectedIndex = DisplayMenu(options);
+
+            if (selectedIndex == options.Length - 1) return;
+
             Console.Clear();
-            Console.WriteLine("Wybierz system liczbowy do przekształcenia:");
-            Console.WriteLine("1. Dziesiętny");
-            Console.WriteLine("2. Binarny");
-            Console.WriteLine("3. Ósemkowy");
-            Console.WriteLine("4. Szesnastkowy");
-            Console.WriteLine("5. Wyjście");
-            Console.Write("Wybór: ");
-            string choice = Console.ReadLine();
-
-            if (choice == "5") break;
-
             Console.Write("Podaj liczbę: ");
             string number = Console.ReadLine();
 
-            switch (choice)
+            switch (selectedIndex)
             {
-                case "1":
+                case 0:
                     numberSystems.SetFromDecimal(number);
                     break;
-                case "2":
+                case 1:
                     numberSystems.SetFromBinary(number);
                     break;
-                case "3":
+                case 2:
                     numberSystems.SetFromOctal(number);
                     break;
-                case "4":
+                case 3:
                     numberSystems.SetFromHexadecimal(number);
                     break;
-                default:
-                    Console.WriteLine("Nieprawidłowy wybór.");
-                    continue;
             }
 
             Console.Clear();
             Console.WriteLine(numberSystems.ToString());
             Console.WriteLine("Naciśnij dowolny klawisz, aby kontynuować...");
             Console.ReadKey();
+        }
+    }
+
+    private static int DisplayMenu(string[] options)
+    {
+        int selectedIndex = 0;
+
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("Wybierz system liczbowy do przekształcenia:");
+
+            for (int i = 0; i < options.Length; i++)
+            {
+                if (i == selectedIndex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = ConsoleColor.White;
+                }
+
+                Console.WriteLine(options[i]);
+                Console.ResetColor();
+            }
+
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    selectedIndex = selectedIndex == 0
+                        ? options.Length - 1
+                        : selectedIndex - 1;
+                    break;
+                case ConsoleKey.DownArrow:
+                    selectedIndex = selectedIndex == options.Length - 1
+                        ? 0
+                        : selectedIndex + 1;
+                    break;
+                case ConsoleKey.Enter:
+                    return selectedIndex;
+            }
         }
     }
 }
